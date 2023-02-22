@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="grid">
+          <!-- cards -->
+          <!-- <div id="card_template" class="card">
+            <div class="c_header">
+              <img class="c_img" src="https://picsum.photos/200" />
+              <div class="c_title">
+                <p class="c_name" data-name>Tom Ruff</p>
+                <p class="c_atname" data-username>@Praizerskater</p>
+              </div>
+            </div>
+            <div class="c_lower">
+              <p class="c_bio" data-bio>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
+                quis eveniet error alias quibusdam magni velit, obcaecati illo
+                distinctio laborum. Nostrum fugit laboriosam vitae
+                necessitatibus enim nulla? Deleniti, eius nobis.
+              </p>
+            </div>
+          </div> -->
+          <!-- cards -->
+        </div>
+      </div>
+    </div>
+
+    <template id="card_template">
+      <div class="card">
+        <div class="c_header">
+          <img class="c_img skeleton" src="https://picsum.photos/200" />
+          <div class="c_title">
+            <div class="c_name" data-name>
+                <div class="skeleton skeleton-text mb-sm"></div>
+            </div>
+            <div class="c_atname" data-username>
+                <div class="skeleton skeleton-text"></div>
+            </div>
+          </div>
+        </div>
+        <div class="c_lower">
+          <div class="c_bio" data-bio>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </body>
+  <script>
+    const grid = document.querySelector(".grid");
+    const cardTemplate = document.getElementById("card_template");
+    for (let i = 0; i < 10; i++) {
+      grid.append(cardTemplate.content.cloneNode(true));
+    }
+
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((users) => {
+        grid.innerHTML = "";
+        users.forEach((user) => {
+          var card = cardTemplate.content.cloneNode(true);
+          card.querySelector("[data-username]").textContent =
+            "@" + user.username;
+          card.querySelector("[data-name]").textContent = user.name;
+          card.querySelector("[data-bio]").textContent =
+            user.company.catchPhrase + " " + user.company.bs + " " +user.company.catchPhrase;
+          grid.append(card);
+        });
+      });
+  </script>
+</html>
